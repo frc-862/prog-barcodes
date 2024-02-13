@@ -8,10 +8,12 @@ clearInputBuffer = lambda: termios.tcflush(sys.stdin, termios.TCIOFLUSH)
 def getConfig():
     config = None
     current = None
+
     with open("config.json", "r") as file:
         config = json.load(file)
     with open("current.json", "r") as file:
         current = json.load(file)
+
     return [config, current]
 
 def dumpCurrent(data):
@@ -23,12 +25,12 @@ def addLog(data):
         json.write(json.load(file).append(data), file, indent=4)
 
 def handleMiscCmds(name, code):
-    hasName = name != None
+    # hasName = name != None
 
     if code == "SYSPWR":
         system("sudo reboot")
         return 0
-    elif code == "SYSGETDATA":
+    elif code == "SYSDTA":
         with open('data.json', 'r') as file:
             print(json.load(file))
         input("Scan to continue ")
@@ -37,14 +39,24 @@ def handleMiscCmds(name, code):
         with open("current.json", "w") as file:
             json.dump({}, file, indent=4)
         return 0
+    elif code == "SYSPULLGH":
+        system("kill $BASHPID -9")
+        input()
+        return 0
     else: return -1
 
-def printCurrent(update = False):
+def printCurrent():
     print("")
-    if any([v[0] == "OUT" for v in current.values()]): print("\033[0m  Currently signed out items:")
+    if any([v[0] == "OUT" for v in current.values()]):
+        print("\033[0m  Currently signed out items:")
     for item in current:
         if current[item][0] == "OUT":
-            print("\033[95m            * " + item + " signed out by: \033[93m" + config["users"][current[item][1]] + "\033[0m")
+            correctName = None
+            try:
+                correctName = config["users"][current[item][1]]
+            except:
+                correctName = config["groups"][current[item][1]]
+            print("\033[95m            * " + item + " signed out by: \033[93m" + correctName + "\033[0m")
     print("")
 
 def clearScreen():
@@ -66,23 +78,37 @@ try:
         name = input("\033[96m  NAME/SUBGROUP: \033[90m").upper()
         
         cmds = handleMiscCmds(None, name)
+
         if cmds == 0:
             clearScreen()
             continue
-        if name not in config["users"] and cmds == -1:
+
+        if name in config["items"] and name in current.keys() and current[name][0] == "OUT" and cmds == -1:
+            current[name] = ["IN", "UNKNOWN"]
+            print("\033[92m  Signed " + name + " IN\033[0m")
+            dumpCurrent(current)
+            sleep(0.4)
+            clearScreen()
+            continue
+
+        if name not in config["users"] and name not in config["groups"] and cmds == -1:
             system("clear")
             print("\033[91m  Invalid name, try again \033[90m(read " + name +")\033[0m")
             continue
 
         system("clear")
         printCurrent()
-        print("\033[96m  NAME: \033[93m" + config["users"][name] +"\033[0m\n")
+
+        if name in config["groups"]:
+            print("\033[96m  SUBGROUP: \033[93m" + config["groups"][name] +"\033[0m\n")
+        else:
+            print("\033[96m  NAME: \033[93m" + config["users"][name] +"\033[0m\n")
 
         while True:
             code = input("\033[96m  SCAN ITEM: \033[93m").upper()
             print("\033[0m")
         
-            if code == name: break
+            if code in config["users"] or code in config["groups"]: break
 
             handleMiscCmds(name, code)
 
@@ -90,7 +116,8 @@ try:
                 print("\033[91m  Invalid code, try again\033[0m")
                 continue
             break
-        if code == name:
+
+        if code in config["users"] or code in config["groups"]:
             clearScreen()
             continue
 
@@ -98,7 +125,9 @@ try:
             current[code] = ["OUT", name]
         elif current[code][0] == "OUT":
             current[code] = ["IN", name]
+        
         print("\033[92m  Signed " + code + " " + current[code][0] + "\033[0m")
+
         dumpCurrent(current)
         sleep(0.4)
         clearScreen()

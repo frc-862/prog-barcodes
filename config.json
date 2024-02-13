@@ -35,13 +35,18 @@
         "USR05": "Nate",
         "USR06": "David",
         "USR07": "Vanessa",
+        "USR08": "Carter",
+        "USR09": "Vilok",
 
         "USR14": "John W.",
         "USR15": "Mr. Hurley",
         "USR16": "Mr. Geib",
         "USR17": "Mr. O",
         "USR18": "Mr. Derry",
-        "USR19": "Jordan"
+        "USR19": "Jordan",
+        "USR20": "Fritz",
+
+        "USR22": "Guest"
     },
     "groups": {
         "SUB00": "admin",
