@@ -1,8 +1,128 @@
 [
     {
-        "timestamp": 0,
-        "name": null,
-        "event": "out",
-        "item": "WF0"
+        "timestamp": "2024-02-24T11:13:05.773550",
+        "item": "DS0",
+        "user": "USR07",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:14:04.450439",
+        "item": "DS0",
+        "user": "USR07",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-02-24T11:14:11.450747",
+        "item": "DS1",
+        "user": "USR07",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:15:53.414863",
+        "item": "DS0",
+        "user": "USR07",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:16:00.770204",
+        "item": "DS0",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-02-24T11:32:47.328072",
+        "item": "DS0",
+        "user": "SUB01",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:32:54.882964",
+        "item": "C0",
+        "user": "SUB01",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:33:09.208826",
+        "item": "C1",
+        "user": "SUB01",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:33:39.674781",
+        "item": "WF2",
+        "user": "USR01",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:33:57.423090",
+        "item": "CH1",
+        "user": "USR01",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:34:05.515031",
+        "item": "CH0",
+        "user": "USR01",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:34:19.235597",
+        "item": "C6",
+        "user": "SUB03",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T11:35:37.243567",
+        "item": "DS5",
+        "user": "USR08",
+        "action": "OUT"
+    },
+    {
+        "timestamp": "2024-02-24T13:15:13.255760",
+        "item": "DS5",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-08-12T16:56:49.618710",
+        "item": "DS0",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-08-12T16:56:51.481975",
+        "item": "C0",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-08-12T16:56:57.045235",
+        "item": "C6",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-08-12T16:56:58.433820",
+        "item": "C1",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-08-12T16:56:59.586901",
+        "item": "WF2",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-08-12T16:57:00.882837",
+        "item": "CH1",
+        "user": "UNKNOWN",
+        "action": "IN"
+    },
+    {
+        "timestamp": "2024-08-12T16:57:02.947101",
+        "item": "CH0",
+        "user": "UNKNOWN",
+        "action": "IN"
     }
 ]

@@ -1,1 +1,38 @@
-{}
+{
+    "DS0": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "DS1": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "C0": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "C1": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "WF2": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "CH1": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "CH0": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "C6": [
+        "IN",
+        "UNKNOWN"
+    ],
+    "DS5": [
+        "IN",
+        "UNKNOWN"
+    ]
+}

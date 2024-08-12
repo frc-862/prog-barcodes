@@ -1,5 +1,6 @@
 import json
 import sys, termios
+import datetime
 from time import sleep
 from os import system
 
@@ -21,29 +22,33 @@ def dumpCurrent(data):
         json.dump(data, file, indent=4)
 
 def addLog(data):
-    with open("data.json", "rw") as file:
-        json.write(json.load(file).append(data), file, indent=4)
+    fileData = None
+    with open("data.json", "r") as file:
+        fileData = json.load(file)
+    with open("data.json", "w") as file:
+        fileData.append(data)
+        json.dump(fileData, file, indent=4)
 
-def handleMiscCmds(name, code):
-    # hasName = name != None
-
-    if code == "SYSPWR":
+def handleMiscCmds(code):
+    if code.startswith("SYSCMD-"):
+        system(code[7:])
+        input()
+    elif code == "SYSPWR":
         system("sudo reboot")
-        return 0
     elif code == "SYSDTA":
+        print("\033[0m")
         with open('data.json', 'r') as file:
-            print(json.load(file))
+            print(json.dumps(json.load(file), indent=4))
         input("Scan to continue ")
-        return 0
     elif code == "SYSCLR":
         with open("current.json", "w") as file:
             json.dump({}, file, indent=4)
-        return 0
     elif code == "SYSPULLGH":
+        print("\033[0m")
         system("kill $BASHPID -9")
         input()
-        return 0
     else: return -1
+    return 0
 
 def printCurrent():
     print("")
@@ -56,6 +61,7 @@ def printCurrent():
                 correctName = config["users"][current[item][1]]
             except:
                 correctName = config["groups"][current[item][1]]
+            if item == "837013207139": item = "TACHOMETER" # TEMP
             print("\033[95m            * " + item + " signed out by: \033[93m" + correctName + "\033[0m")
     print("")
 
@@ -77,7 +83,7 @@ try:
 
         name = input("\033[96m  NAME/SUBGROUP: \033[90m").upper()
         
-        cmds = handleMiscCmds(None, name)
+        cmds = handleMiscCmds(name)
 
         if cmds == 0:
             clearScreen()
@@ -87,6 +93,12 @@ try:
             current[name] = ["IN", "UNKNOWN"]
             print("\033[92m  Signed " + name + " IN\033[0m")
             dumpCurrent(current)
+            addLog({
+                "timestamp": datetime.datetime.now().isoformat(),
+                "item": name,
+                "user": "UNKNOWN",
+                "action": "IN"
+            })
             sleep(0.4)
             clearScreen()
             continue
@@ -110,7 +122,7 @@ try:
         
             if code in config["users"] or code in config["groups"]: break
 
-            handleMiscCmds(name, code)
+            handleMiscCmds(code)
 
             if code not in config["items"]:
                 print("\033[91m  Invalid code, try again\033[0m")
@@ -123,8 +135,20 @@ try:
 
         if not code in current.keys() or current[code][0] == "IN":
             current[code] = ["OUT", name]
+            addLog({
+                "timestamp": datetime.datetime.now().isoformat(),
+                "item": code,
+                "user": name,
+                "action": "OUT"
+            })
         elif current[code][0] == "OUT":
             current[code] = ["IN", name]
+            addLog({
+                "timestamp": datetime.datetime.now().isoformat(),
+                "item": code,
+                "user": name,
+                "action": "IN"
+            })
         
         print("\033[92m  Signed " + code + " " + current[code][0] + "\033[0m")
 
