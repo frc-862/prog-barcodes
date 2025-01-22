@@ -7,9 +7,10 @@ Programming's checkout system for devices we use.
 - Barcode Scanner
 
 ### PI Config
-1. Configure console autologin, hostname, etc.
-2. `scp -r <this repo> username@pi:/home/username/prog-checkout`
-3. Set execute repo script in `~/.bash_profile`
+0. Download Raspberry Pi OS Lite and flash onto pi.
+1. Use `raspi-config` to configure console autologin, hostname, etc.
+2. From your computer, clone the repository, then type `scp -r <this repo> username@hostname:/home/username/prog-checkout` to send it to the pi.
+3. Set execute repo script on the PI in `~/.bash_profile`
 ```bash
 source ~/.profile
 if [ -z $DISPLAY ] && [ $(tty) = /dev/tty1 ]
